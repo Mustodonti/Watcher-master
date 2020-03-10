@@ -1,0 +1,98 @@
+﻿<Window x:Class="WpfApp2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp2"
+        mc:Ignorable="d"
+        Title="Программа для слежения за файлами" Height="450" Width="1000" Background="Gray">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Vertical" Grid.Column="0">
+            <TextBlock
+                       Foreground="Red"
+                       FontStyle="Italic"
+                       FontFamily="TimesNewRoman"
+                       FontSize="20"
+                       Text="Выберите директорию для слежения за файлами:"
+                       Margin="0,10,0,0"
+                       HorizontalAlignment="Center"
+                />
+            <Button 
+                    Content="Обзор"
+                    x:Name="Button1"
+                    Click="BrowseForWatch"
+                    />
+            <TextBlock
+                       
+                       Foreground="Red"
+                       FontStyle="Italic"
+                       FontFamily="TimesNewRoman"
+                       FontSize="20"
+                       Text="Выбранная директория:" 
+                       HorizontalAlignment="Center"
+                />
+            <TextBox x:Name="browsePathTB" Text="" AcceptsTab="False">
+            </TextBox>
+
+            <TextBlock
+                       Foreground="Red"
+                       FontStyle="Italic"
+                       FontFamily="TimesNewRoman"
+                       FontSize="20"
+                       Text="Введите дату:"
+                       HorizontalAlignment="Center"
+                />
+            <DatePicker x:Name="DatePicker"  />
+            <TextBox x:Name="periodDaysTB" Text="" AcceptsTab="False" 
+                     />
+            <Button 
+                    Content="Старт"
+                    Margin="0,20,0,0"
+                    x:Name="Button2"
+                    Click="CopyMove"
+                    />
+            <TextBlock
+                Margin="0,40,0,0"
+                Foreground="Red"
+                FontStyle="Italic"
+                FontFamily="TimesNewRoman"
+                FontSize="20"
+                Text="Выберите директрорию для удаления:"
+                HorizontalAlignment="Center"
+                />
+            <Button Content="Обзор" Click="BrowseForDelete" />
+            <TextBlock
+                       
+                Foreground="Red"
+                FontStyle="Italic"
+                FontFamily="TimesNewRoman"
+                FontSize="20"
+                Text="Выбранная директория:" 
+                HorizontalAlignment="Center"
+                Margin="135.203,0,134.796,0"
+                />
+            <TextBox 
+                x:Name="browsePathToDeleteTB"
+                Text="" 
+                AcceptsTab="False" 
+                RenderTransformOrigin="0.5,0.5"/>
+            <Button Content="Удалить" Click="Delete" />
+
+        </StackPanel>
+        <TextBlock
+            Grid.Column="1"
+            Background="Black"
+            />
+        <TextBlock
+            Grid.Column="2"
+            Padding="10"
+            x:Name="TextBlock_Column2"
+            FontSize="10"
+            />
+    </Grid>
+</Window>
