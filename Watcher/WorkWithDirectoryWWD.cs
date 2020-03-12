@@ -96,7 +96,7 @@ namespace ASD
             try
             {
                 DirectoryInfo targetDir = new DirectoryInfo(targetPath);
-                if (!targetDir.Exists) targetDir.Create();
+                //if (!targetDir.Exists) targetDir.Create();
                 var DirectoriesInTargetDir = targetDir.GetDirectories().Select(f => f.Name);
                 foreach (string Dir in PathOfDirectories)
                 {
