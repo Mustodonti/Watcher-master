@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Watcher"
         mc:Ignorable="d"
-        Title="Программа для слежения за файлами" Height="450" Width="1000" Background="Gray">
+        Title="Программа для слежения за файлами" Height="350" Width="1000" Background="Gray">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -56,40 +56,13 @@
                        HorizontalAlignment="Center"
                 />
             <DatePicker x:Name="DatePicker"  />
-            
+
             <Button 
                     Content="Старт"
                     Margin="0,20,0,0"
                     x:Name="Button2"
                     Click="CopyMove"
                     />
-            <TextBlock
-                Margin="0,40,0,0"
-                Foreground="Red"
-                FontStyle="Italic"
-                FontFamily="TimesNewRoman"
-                FontSize="20"
-                Text="Выберите директрорию для удаления:"
-                HorizontalAlignment="Center"
-                />
-            <Button Content="Обзор" Click="BrowseForDelete" />
-            <TextBlock
-                       
-                Foreground="Red"
-                FontStyle="Italic"
-                FontFamily="TimesNewRoman"
-                FontSize="20"
-                Text="Выбранная директория:" 
-                HorizontalAlignment="Center"
-                Margin="135.203,0,134.796,0"
-                />
-            <TextBox 
-                x:Name="browsePathToDeleteTB"
-                Text="" 
-                AcceptsTab="False" 
-                RenderTransformOrigin="0.5,0.5"/>
-            <Button Content="Удалить" Click="Delete" />
-
         </StackPanel>
         <TextBlock
             Grid.Column="1"

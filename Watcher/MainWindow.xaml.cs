@@ -37,9 +37,6 @@ namespace Watcher
         }
 
         void BrowseForWatch(object sender, RoutedEventArgs e) => browsePathTB.Text = WorkWithDirectoryWWD.WayToFolder();
-
-        void BrowseForDelete(object sender, RoutedEventArgs e) => browsePathToDeleteTB.Text = WorkWithDirectoryWWD.WayToFolder();
-
         void CopyMove(object sender, RoutedEventArgs e)
         {
             TextBlock_Column2.Text = "";
@@ -82,16 +79,6 @@ namespace Watcher
             {
                 MessageBox.Show(ex.Message);
             }
-        }
-        void Delete(object sender, RoutedEventArgs e)
-        {
-            if (browsePathToDeleteTB.Text != "")
-            {
-                WorkWithDirectoryWWD.DeleteDirectoriesInDyrectoriesWWD006(browsePathToDeleteTB.Text).ForEach(i => TextBlock_Column2.Text += i + "\n");
-                WorkWithDirectoryWWD.DeleteFilesInDirectoriesWWD007(browsePathToDeleteTB.Text).ForEach(i => TextBlock_Column2.Text += i + "\n");
-                Directory.Delete(_targetPath, true);
-            }
-            else MessageBox.Show("Вы не ввели путь для удаления директории");
         }
     }
 }
