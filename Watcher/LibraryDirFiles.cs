@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Linq;
 
-namespace ASD
+namespace LibraryDirFiles
 {
     class WorkWithDirectoryWWD
     {

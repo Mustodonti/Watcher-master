@@ -2,20 +2,19 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.IO;
-using ASD;
+using LibraryDirFiles;
 
-namespace WpfApp2
+namespace Watcher
 {
     public partial class Window : System.Windows.Window
     {
         string _selectPathToWatch;
-        int _periodDays=0;
-        string _targetPath;
-        
+        string _targetPath = "C:\\Будет удалено";
+        int _periodDays = 0;
         public Window()
         {
-            InitializeComponent();  
-            DirectoryInfo selectPathToDelete = new DirectoryInfo(@"C:\Будет удалено");
+            InitializeComponent();
+            DirectoryInfo selectPathToDelete = new DirectoryInfo(_targetPath);
             if (selectPathToDelete.Exists)
             {
                 try
@@ -28,7 +27,7 @@ namespace WpfApp2
                     {
                         Directory.Delete(@"C:\Будет удалено", true);
                     }
-                    else this.Close();                  
+                    else this.Close();
                 }
                 catch (Exception ex)
                 {
@@ -48,49 +47,40 @@ namespace WpfApp2
             try
             {
                 _periodDays = (int)(DateTime.Now - date).TotalDays;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-            if (browsePathTB.Text != "")
-            {
-                _selectPathToWatch = browsePathTB.Text;
-                _targetPath = "C:\\Будет удалено";
-                WorkWithDirectoryWWD.CreateDirectoryToTargetPathWWD001(_targetPath);
-
-                TextBlock_Column2.Text += "\nУстаревшие Каталоги:\n";
-                List<string> DirectoriesList = WorkWithDirectoryWWD.GetDirectoriesOlderDatetimeWWD002(_selectPathToWatch, _periodDays);
-                DirectoriesList.ForEach(i=> TextBlock_Column2.Text += i + "\n");
-
-                TextBlock_Column2.Text += "\nУстаревшие Файлы:\n";
-                List<string> FilesList = WorkWithDirectoryWWD.GetFilesOlderDatetimeWWD003(_selectPathToWatch, _periodDays);
-                FilesList.ForEach(i => TextBlock_Column2.Text += i + "\n");
-
-                /*Movement old files to destination folder */
-                WorkWithDirectoryWWD.MovementFilesWWD005(_targetPath, FilesList);
-                TextBlock_Column2.Text += $"\nФайлы успешно перемещены: \n{_targetPath}";
-                WorkWithDirectoryWWD.MovementDirectoriesWWD004(_targetPath, DirectoriesList);
-                TextBlock_Column2.Text += $"\nКаталоги успешно перемещены: \n{_targetPath}";
-
-                /*Create Log.txt*/
-                try
+                if (browsePathTB.Text != "")
                 {
+                    _selectPathToWatch = browsePathTB.Text;
+                    WorkWithDirectoryWWD.CreateDirectoryToTargetPathWWD001(_targetPath);
+
+                    TextBlock_Column2.Text += "\nУстаревшие Каталоги:\n";
+                    List<string> DirectoriesList = WorkWithDirectoryWWD.GetDirectoriesOlderDatetimeWWD002(_selectPathToWatch, _periodDays);
+                    DirectoriesList.ForEach(i => TextBlock_Column2.Text += i + "\n");
+
+                    TextBlock_Column2.Text += "\nУстаревшие Файлы:\n";
+                    List<string> FilesList = WorkWithDirectoryWWD.GetFilesOlderDatetimeWWD003(_selectPathToWatch, _periodDays);
+                    FilesList.ForEach(i => TextBlock_Column2.Text += i + "\n");
+
+                    /*Movement old files to destination folder */
+                    WorkWithDirectoryWWD.MovementFilesWWD005(_targetPath, FilesList);
+                    TextBlock_Column2.Text += $"\nФайлы успешно перемещены: \n{_targetPath}";
+                    WorkWithDirectoryWWD.MovementDirectoriesWWD004(_targetPath, DirectoriesList);
+                    TextBlock_Column2.Text += $"\nКаталоги успешно перемещены: \n{_targetPath}";
+
+                    /*Create Log.txt*/
                     using (StreamWriter sw = new StreamWriter(@"C:\Будет удалено\Log.txt", false, System.Text.Encoding.Default))
                     {
                         sw.WriteLine(DatePicker.SelectedDate.Value.ToString("dd.MM.yyyy"));
                         sw.Close();
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    Console.WriteLine(ex.Message);
+                    MessageBox.Show("Не заполнен путь к директории");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Не заполнен путь к директории");
+                MessageBox.Show(ex.Message);
             }
         }
         void Delete(object sender, RoutedEventArgs e)
@@ -99,15 +89,7 @@ namespace WpfApp2
             {
                 WorkWithDirectoryWWD.DeleteDirectoriesInDyrectoriesWWD006(browsePathToDeleteTB.Text).ForEach(i => TextBlock_Column2.Text += i + "\n");
                 WorkWithDirectoryWWD.DeleteFilesInDirectoriesWWD007(browsePathToDeleteTB.Text).ForEach(i => TextBlock_Column2.Text += i + "\n");
-                //try
-                //{
-                //    Directory.Delete(browsePathToDeleteTB.Text, true);
-                //}
-                //catch (Exception ex)
-                //{
-                //    MessageBox.Show(ex.Message);
-                //}
-                
+                Directory.Delete(_targetPath, true);
             }
             else MessageBox.Show("Вы не ввели путь для удаления директории");
         }
