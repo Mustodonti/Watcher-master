@@ -11,6 +11,7 @@ namespace WpfApp2
         string _selectPathToWatch;
         int _periodDays=0;
         string _targetPath;
+        
         public Window()
         {
             InitializeComponent();  
@@ -96,9 +97,17 @@ namespace WpfApp2
         {
             if (browsePathToDeleteTB.Text != "")
             {
-                WorkWithDirectoryWWD.GetDirectoriesInDyrectoriesWWD006(browsePathToDeleteTB.Text).ForEach(i => TextBlock_Column2.Text += i + "\n");
-                WorkWithDirectoryWWD.GetFilesInDirectoriesWWD007(browsePathToDeleteTB.Text).ForEach(i => TextBlock_Column2.Text += i + "\n"); ;
-                Directory.Delete(browsePathToDeleteTB.Text, true);
+                WorkWithDirectoryWWD.DeleteDirectoriesInDyrectoriesWWD006(browsePathToDeleteTB.Text).ForEach(i => TextBlock_Column2.Text += i + "\n");
+                WorkWithDirectoryWWD.DeleteFilesInDirectoriesWWD007(browsePathToDeleteTB.Text).ForEach(i => TextBlock_Column2.Text += i + "\n");
+                //try
+                //{
+                //    Directory.Delete(browsePathToDeleteTB.Text, true);
+                //}
+                //catch (Exception ex)
+                //{
+                //    MessageBox.Show(ex.Message);
+                //}
+                
             }
             else MessageBox.Show("Вы не ввели путь для удаления директории");
         }

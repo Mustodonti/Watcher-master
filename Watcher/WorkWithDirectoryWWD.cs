@@ -93,8 +93,13 @@ namespace ASD
 
         static public void MovementDirectoriesWWD004(string targetPath, List<string> PathOfDirectories)
         {
+            string _exceptpathname1 = "ShareGuriy";
+            string _exceptpathname2 = "Sharpdesk Desktop";
+            string _exceptpathname3 = "ShareIwan";
+            string _exceptpathname4 = "BACKUP";
             try
             {
+
                 DirectoryInfo targetDir = new DirectoryInfo(targetPath);
                 //if (!targetDir.Exists) targetDir.Create();
                 var DirectoriesInTargetDir = targetDir.GetDirectories().Select(f => f.Name);
@@ -102,14 +107,17 @@ namespace ASD
                 {
                     DirectoryInfo F = new DirectoryInfo(Dir);
                     string DirName = F.Name;
-                    int i = 1;
-                    while (DirectoriesInTargetDir.Contains(DirName))
+                    if (DirName != _exceptpathname1 && DirName != _exceptpathname2 && DirName != _exceptpathname3 && DirName != _exceptpathname4)
                     {
-                        MessageBox.Show("2");
-                        i++;
-                        DirName = string.Format("{0} ({1})", DirName, i);
+                        int i = 1;
+                        while (DirectoriesInTargetDir.Contains(DirName))
+                        {
+                            MessageBox.Show("2");
+                            i++;
+                            DirName = string.Format("{0} ({1})", DirName, i);
+                        }
+                        F.MoveTo(Path.Combine(targetPath, DirName));
                     }
-                    F.MoveTo(Path.Combine(targetPath, DirName));
                 }
             }
             catch (Exception ex)
@@ -148,16 +156,25 @@ namespace ASD
                 MessageBox.Show(ex.Message + "\nErrorIn#WWD005\n");
             }
         }
-        static public List<string> GetDirectoriesInDyrectoriesWWD006(string Path)
+        static public List<string> DeleteDirectoriesInDyrectoriesWWD006(string Path)
         {
+            string _exceptpathname1 = "ShareGuriy";
+            string _exceptpathname2 = "Sharpdesk Desktop";
+            string _exceptpathname3 = "ShareIwan";
+            string _exceptpathname4 = "BACKUP";
             List<string> DerectoriesAreDeleted_Path = new List<string>();
             try
             {
                 string[] dir = Directory.GetDirectories(Path);
                 foreach (string path in dir)
                 {
-                    DerectoriesAreDeleted_Path.Add(path);
-                    Directory.Delete(path, true);
+                    DirectoryInfo direct = new DirectoryInfo(path);
+                    if (direct.Name !=_exceptpathname1 && direct.Name != _exceptpathname2 && direct.Name != _exceptpathname3 && direct.Name != _exceptpathname4)
+                    {
+                        DerectoriesAreDeleted_Path.Add(path);
+                        Directory.Delete(path, true);
+                    }
+                    
                 }
                 return DerectoriesAreDeleted_Path;
             }
@@ -168,7 +185,7 @@ namespace ASD
             }
         }
 
-        static public List<string> GetFilesInDirectoriesWWD007(string Path)
+        static public List<string> DeleteFilesInDirectoriesWWD007(string Path)
         {
             List<string> FilesAreDeleted_Path = new List<string>();
             try
@@ -177,12 +194,15 @@ namespace ASD
                 string[] files = Directory.GetFiles(Path);
                 foreach (string path in files)
                 {
-                    FilesAreDeleted_Path.Add(path);
-                    FileInfo fl = new FileInfo(path);
-                    fl.Delete();
+                        FilesAreDeleted_Path.Add(path);
+                        FileInfo fl = new FileInfo(path);
+                        fl.IsReadOnly = false;
+                        fl.Delete();
+                   
                 }
                 return FilesAreDeleted_Path;
             }
+            
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + "\nErrorIn#WWD007\n");
